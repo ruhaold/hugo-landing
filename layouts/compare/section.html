@@ -1,0 +1,82 @@
+{{ define "main" }}
+{{ $models := where site.RegularPages "Section" "models" }}
+{{ $models = $models.ByWeight }}
+
+{{/* Строки таблицы: подпись, параметр, единица, что считать лучшим (min / max / пусто) */}}
+{{ $rows := slice
+  (dict "label" "price"   "key" "price"   "unit" ""         "best" "min")
+  (dict "label" "range"   "key" "range"   "unit" "km"       "best" "max")
+  (dict "label" "accel"   "key" "accel"   "unit" "sec"      "best" "min")
+  (dict "label" "power"   "key" "power"   "unit" "hp"       "best" "max")
+  (dict "label" "battery" "key" "battery" "unit" "kwh"      "best" "max")
+  (dict "label" "drive"   "key" "drive"   "unit" ""         "best" "")
+  (dict "label" "bodyType" "key" "bodyType" "unit" ""       "best" "") }}
+
+<section class="page-head">
+  <div class="container">
+    {{ partial "breadcrumbs.html" . }}
+    <h1>{{ .Title }}</h1>
+    <p class="muted">{{ i18n "compareText" }}</p>
+  </div>
+</section>
+
+<section class="section" data-compare
+  data-min="2" data-max="3"
+  data-best-label="{{ i18n "compareBest" }}"
+  data-hint-min="{{ i18n "compareMin" }}" data-hint-max="{{ i18n "compareMax" }}">
+  <div class="container">
+    <fieldset class="compare-picker" data-picker>
+      <legend>{{ i18n "comparePick" }}</legend>
+      <div class="chips">
+        {{ range $models }}
+          <label class="chip"><input type="checkbox" name="m" value="{{ .File.ContentBaseName }}"><span>{{ .Title }}</span></label>
+        {{ end }}
+      </div>
+      <p class="compare-picker__hint muted" data-hint aria-live="polite"></p>
+    </fieldset>
+
+    {{/* Таблица целиком рендерится Hugo (без JS видны все модели); JS скрывает лишние колонки и подсвечивает лучшее */}}
+    <div class="table-scroll" tabindex="0" role="region" aria-label="{{ .Title }}">
+      <table class="compare-table" data-table>
+        <thead>
+          <tr>
+            <td></td>
+            {{ range $models }}
+              {{ $cover := .Resources.GetMatch "cover.*" }}
+              <th scope="col" data-model="{{ .File.ContentBaseName }}">
+                <a href="{{ .RelPermalink }}">
+                  {{ with $cover }}{{ partial "picture.html" (dict "img" . "alt" "" "sizes" "220px" "widths" (slice 220 440)) }}{{ end }}
+                  <span>{{ .Title }}</span>
+                </a>
+              </th>
+            {{ end }}
+          </tr>
+        </thead>
+        <tbody>
+          {{ range $rows }}
+            {{ $row := . }}
+            <tr data-best="{{ $row.best }}">
+              <th scope="row">{{ i18n $row.label }}</th>
+              {{ range $models }}
+                {{ $v := index .Params $row.key }}
+                <td data-model="{{ .File.ContentBaseName }}"{{ if $row.best }} data-value="{{ $v }}"{{ end }}>
+                  {{- if eq $row.key "price" }}{{ partial "price.html" $v }}
+                  {{- else if eq $row.key "drive" }}{{ i18n (printf "drive_%s" $v) }}
+                  {{- else if eq $row.key "bodyType" }}{{ delimit $v ", " }}
+                  {{- else }}{{ $v }}{{ with $row.unit }} {{ i18n . }}{{ end }}{{ end -}}
+                </td>
+              {{ end }}
+            </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ define "scripts" }}
+  {{ with resources.Get "js/compare.js" | resources.Minify | resources.Fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+  {{ end }}
+{{ end }}

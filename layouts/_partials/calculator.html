@@ -1,0 +1,68 @@
+{{/* Калькулятор владения: электричество против бензина. Диапазоны и значения по умолчанию берутся из params.calc в hugo.toml */}}
+{{ $c := site.Params.calc }}
+{{ $models := (where site.RegularPages "Section" "models").ByWeight }}
+<section class="section section--alt" id="calculator" data-pagefind-ignore data-calculator
+  data-price-format="{{ i18n "priceFormat" }}"
+  data-digits="{{ $c.digits }}"
+  data-saved="{{ i18n "calcSaved" }}"
+  data-extra="{{ i18n "calcExtra" }}">
+  <div class="container">
+    <h2>{{ i18n "calcTitle" }}</h2>
+    <p class="muted calc__lead">{{ i18n "calcText" }}</p>
+
+    <div class="calc">
+      <form class="calc__form" onsubmit="return false">
+        <div class="calc__field">
+          <label for="calc-model">{{ i18n "calcModel" }}</label>
+          <select id="calc-model" class="select" name="model">
+            {{ range $models }}
+              {{/* Расход электромобиля: ёмкость батареи / запас хода * 100 */}}
+              <option value="{{ printf "%.1f" (div (mul .Params.battery 100.0) .Params.range) }}">{{ .Title }}</option>
+            {{ end }}
+          </select>
+          <p class="muted calc__hint"><output data-kwh></output> {{ i18n "unitKwhPer100" }}</p>
+        </div>
+
+        {{ range slice
+          (dict "id" "mileage" "label" "calcMileage" "unit" "unitKmYear" "money" false)
+          (dict "id" "tariff" "label" "calcTariff" "unit" "unitPerKwh" "money" true)
+          (dict "id" "fuel" "label" "calcFuel" "unit" "unitPerLiter" "money" true)
+          (dict "id" "consumption" "label" "calcConsumption" "unit" "unitLPer100" "money" false) }}
+          {{ $f := index $c .id }}
+          <div class="calc__field">
+            <label for="calc-{{ .id }}">{{ i18n .label }}: <output data-out="{{ .id }}" data-money="{{ .money }}"></output> <span class="muted">{{ i18n .unit }}</span></label>
+            <input id="calc-{{ .id }}" class="range" type="range" name="{{ .id }}"
+              min="{{ $f.min }}" max="{{ $f.max }}" step="{{ $f.step }}" value="{{ $f.value }}">
+          </div>
+        {{ end }}
+      </form>
+
+      <div class="calc__result" aria-live="polite">
+        <div class="calc__cards">
+          <div class="calc-card calc-card--ev">
+            <h3>{{ i18n "calcEv" }}</h3>
+            <p class="calc-card__big"><output data-ev100></output></p>
+            <p class="muted">{{ i18n "calcPer100" }}</p>
+            <p class="calc-card__row"><span class="muted">{{ i18n "calcYear" }}</span> <output data-ev-year></output></p>
+            <p class="calc-card__row"><span class="muted">{{ i18n "calcFiveYears" }}</span> <output data-ev-five></output></p>
+          </div>
+          <div class="calc-card">
+            <h3>{{ i18n "calcIce" }}</h3>
+            <p class="calc-card__big"><output data-ice100></output></p>
+            <p class="muted">{{ i18n "calcPer100" }}</p>
+            <p class="calc-card__row"><span class="muted">{{ i18n "calcYear" }}</span> <output data-ice-year></output></p>
+            <p class="calc-card__row"><span class="muted">{{ i18n "calcFiveYears" }}</span> <output data-ice-five></output></p>
+          </div>
+        </div>
+
+        <div class="bars" aria-hidden="true">
+          <div class="bar"><span class="bar__fill bar__fill--ev" data-bar-ev></span></div>
+          <div class="bar"><span class="bar__fill" data-bar-ice></span></div>
+        </div>
+
+        <p class="calc__total">{{ i18n "calcSavings" }}: <strong data-diff></strong> <span class="muted" data-diff-note></span></p>
+        <p class="muted calc__note">{{ i18n "calcNote" }}</p>
+      </div>
+    </div>
+  </div>
+</section>
