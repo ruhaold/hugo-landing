@@ -1,0 +1,14 @@
+colors:
+  - { id: white,  hex: "#f2f4f7", name: Glacier White,  price: 0 }
+  - { id: black,  hex: "#16191f", name: Obsidian Black, price: 900 }
+  - { id: silver, hex: "#aab1bd", name: Lunar Silver,   price: 900 }
+  - { id: red,    hex: "#c1121f", name: Ruby Red,       price: 1400 }
+  - { id: blue,   hex: "#1d4ed8", name: Deep Ocean,     price: 900 }
+wheels:
+  - { id: w19, size: 19, name: Aero,    text: Efficient design for maximum range, price: 0,    rangeFactor: 1 }
+  - { id: w20, size: 20, name: Sport,   text: Multi-spoke sport wheels,           price: 1200, rangeFactor: 0.97 }
+  - { id: w21, size: 21, name: Turbine, text: Forged turbine design,              price: 2400, rangeFactor: 0.94 }
+packages:
+  - { id: assist, name: Assistant Pro,     text: Adaptive cruise, lane keeping and self-parking, price: 3200 }
+  - { id: roof,   name: Panoramic roof,    text: Dimmable glass roof with UV filter,            price: 1500 }
+  - { id: audio,  name: Studio audio,      text: 18 speakers and spatial sound,                price: 1800 }

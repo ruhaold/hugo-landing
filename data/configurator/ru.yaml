@@ -1,0 +1,14 @@
+colors:
+  - { id: white,  hex: "#f2f4f7", name: Ледниковый белый, price: 0 }
+  - { id: black,  hex: "#16191f", name: Обсидиан,         price: 80000 }
+  - { id: silver, hex: "#aab1bd", name: Лунное серебро,   price: 80000 }
+  - { id: red,    hex: "#c1121f", name: Рубиновый красный, price: 130000 }
+  - { id: blue,   hex: "#1d4ed8", name: Глубокий океан,   price: 80000 }
+wheels:
+  - { id: w19, size: 19, name: Aero,    text: Аэродинамичный дизайн для максимального запаса хода, price: 0,      rangeFactor: 1 }
+  - { id: w20, size: 20, name: Sport,   text: Многоспицевые спортивные диски,                       price: 110000, rangeFactor: 0.97 }
+  - { id: w21, size: 21, name: Turbine, text: Кованые диски-турбины,                                price: 220000, rangeFactor: 0.94 }
+packages:
+  - { id: assist, name: Помощник Pro,       text: Адаптивный круиз, удержание в полосе и автопарковка, price: 290000 }
+  - { id: roof,   name: Панорамная крыша,   text: Затемняемое стекло с УФ-фильтром,                    price: 140000 }
+  - { id: audio,  name: Студийный звук,     text: 18 динамиков и пространственное звучание,           price: 160000 }

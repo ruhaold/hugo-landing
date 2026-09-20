@@ -1,0 +1,71 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.configurator__lead { margin-top: -.8em; margin-bottom: 2rem; }
+
+.configurator {
+  display: grid; gap: 32px; align-items: start;
+  @include up($bp-lg) { grid-template-columns: 1.15fr 1fr; gap: 48px; }
+
+  &__preview { @include up($bp-lg) { position: sticky; top: calc(#{$header-h} + 24px); } }
+}
+
+.car-config {
+  width: 100%; height: auto; margin-bottom: 8px;
+  stop { transition: stop-color .35s ease; }
+}
+
+.summary {
+  padding: 24px; border: 1px solid $border; border-radius: $radius; background: $surface;
+
+  &__list { margin: 0 0 16px; div { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid $border; } }
+  dt { color: $muted; font-size: .9rem; }
+  dd { margin: 0; font-weight: 600; text-align: right; }
+  &__total { font-size: 1.5rem; font-weight: 800; margin: 0 0 16px; output { color: $text; } }
+  .btn { width: 100%; text-align: center; }
+}
+
+.options { display: grid; gap: 28px; }
+
+.opt {
+  border: 0; padding: 0; margin: 0; min-width: 0;
+  legend { font-weight: 700; margin-bottom: 12px; padding: 0; }
+  &__hint { font-size: .85rem; margin: 10px 0 0; }
+}
+
+.swatches { display: flex; flex-wrap: wrap; gap: 12px; }
+.swatch {
+  position: relative; cursor: pointer;
+  input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  &__dot {
+    display: block; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--sw); border: 2px solid alpha($text, .28);
+    box-shadow: inset 0 0 0 3px $surface; transition: transform .15s, border-color .15s;
+  }
+  &:hover &__dot { transform: scale(1.08); }
+  input:checked + &__dot { border-color: $accent-strong; box-shadow: inset 0 0 0 3px $surface, 0 0 0 2px $accent-strong; }
+  input:focus-visible + &__dot { outline: 2px solid $accent; outline-offset: 3px; }
+}
+
+.cards { display: grid; gap: 10px; }
+.option {
+  position: relative; cursor: pointer;
+  input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+
+  &__body {
+    display: grid; gap: 2px; padding: 14px 16px; border: 1px solid $border; border-radius: 12px;
+    background: $surface; transition: border-color .15s, box-shadow .15s;
+  }
+  &__price { font-weight: 600; font-size: .9rem; margin-top: 4px; }
+  &:hover &__body { border-color: $accent; }
+  input:checked + &__body { border-color: $accent-strong; box-shadow: 0 0 0 1px $accent-strong; }
+  input:focus-visible + &__body { outline: 2px solid $accent; outline-offset: 2px; }
+}
+
+.form__note { font-size: .9rem; padding: 10px 14px; border-radius: 12px; background: $bg; border: 1px solid $border; margin: 0;
+  strong { color: $text; } span { color: $muted; } }

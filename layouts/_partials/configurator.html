@@ -1,0 +1,88 @@
+{{/* Конфигуратор комплектации. Разметка полностью рендерится Hugo, JS только пересчитывает цену и перекрашивает SVG. */}}
+{{ $page := . }}
+{{ $cfg := index hugo.Data.configurator site.Language.Lang }}
+{{ $wheel0 := index $cfg.wheels 0 }}
+<section class="section section--alt" id="configurator" data-pagefind-ignore data-configurator
+  data-base-price="{{ .Params.price }}"
+  data-base-range="{{ .Params.range }}"
+  data-price-format="{{ i18n "priceFormat" }}"
+  data-km="{{ i18n "km" }}"
+  data-inch="{{ i18n "inch" }}"
+  data-none="{{ i18n "none" }}"
+  data-model="{{ .Title }}"
+  data-home-url="{{ site.Home.RelPermalink }}">
+  <div class="container">
+    <h2>{{ i18n "configurator" }}</h2>
+    <p class="muted configurator__lead">{{ i18n "configuratorText" }}</p>
+
+    <div class="configurator">
+      <div class="configurator__preview">
+        {{ partial "car-config.html" (dict "shape" .Params.shape "color" .Params.color "title" .Title) }}
+
+        <div class="summary" aria-live="polite">
+          <h3 class="h3">{{ i18n "configSummary" }}</h3>
+          <dl class="summary__list">
+            <div><dt>{{ i18n "configColor" }}</dt><dd data-sum-color>{{ i18n "signature" }}</dd></div>
+            <div><dt>{{ i18n "configWheels" }}</dt><dd data-sum-wheels>{{ $wheel0.name }} {{ $wheel0.size }}{{ i18n "inch" }}</dd></div>
+            <div><dt>{{ i18n "configPackages" }}</dt><dd data-sum-packages>{{ i18n "none" }}</dd></div>
+            <div><dt>{{ i18n "range" }}</dt><dd><output data-range>{{ .Params.range }} {{ i18n "km" }}</output></dd></div>
+          </dl>
+          <p class="summary__total">{{ i18n "total" }}: <output data-total>{{ partial "price.html" .Params.price }}</output></p>
+          <a class="btn" data-cta href="{{ site.Home.RelPermalink }}?model={{ .Title | urlquery }}#test-drive">{{ i18n "bookTestDrive" }}</a>
+        </div>
+      </div>
+
+      <form class="options" data-options onsubmit="return false">
+        <fieldset class="opt">
+          <legend>{{ i18n "configColor" }}</legend>
+          <div class="swatches">
+            <label class="swatch" style="--sw: {{ .Params.color }}">
+              <input type="radio" name="color" value="signature" checked data-hex="{{ .Params.color }}" data-price="0" data-name="{{ i18n "signature" }}">
+              <span class="swatch__dot"></span><span class="sr-only">{{ i18n "signature" }}</span>
+            </label>
+            {{ range $cfg.colors }}
+              <label class="swatch" style="--sw: {{ .hex }}" title="{{ .name }}">
+                <input type="radio" name="color" value="{{ .id }}" data-hex="{{ .hex }}" data-price="{{ .price }}" data-name="{{ .name }}">
+                <span class="swatch__dot"></span><span class="sr-only">{{ .name }}</span>
+              </label>
+            {{ end }}
+          </div>
+          <p class="opt__hint muted" data-color-hint>{{ i18n "signature" }}</p>
+        </fieldset>
+
+        <fieldset class="opt">
+          <legend>{{ i18n "configWheels" }}</legend>
+          <div class="cards">
+            {{ range $i, $w := $cfg.wheels }}
+              <label class="option">
+                <input type="radio" name="wheels" value="{{ $w.id }}" {{ if eq $i 0 }}checked{{ end }}
+                  data-size="{{ $w.size }}" data-price="{{ $w.price }}" data-range-factor="{{ $w.rangeFactor }}" data-name="{{ $w.name }}">
+                <span class="option__body">
+                  <strong>{{ $w.name }} {{ $w.size }}{{ i18n "inch" }}</strong>
+                  <small class="muted">{{ $w.text }}</small>
+                  <span class="option__price">{{ if $w.price }}+{{ partial "price.html" $w.price }}{{ else }}{{ i18n "included" }}{{ end }}</span>
+                </span>
+              </label>
+            {{ end }}
+          </div>
+        </fieldset>
+
+        <fieldset class="opt">
+          <legend>{{ i18n "configPackages" }}</legend>
+          <div class="cards">
+            {{ range $cfg.packages }}
+              <label class="option">
+                <input type="checkbox" name="pkg" value="{{ .id }}" data-price="{{ .price }}" data-name="{{ .name }}">
+                <span class="option__body">
+                  <strong>{{ .name }}</strong>
+                  <small class="muted">{{ .text }}</small>
+                  <span class="option__price">+{{ partial "price.html" .price }}</span>
+                </span>
+              </label>
+            {{ end }}
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>

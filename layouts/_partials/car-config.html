@@ -1,0 +1,58 @@
+{{/*
+  Детальный SVG-автомобиль для конфигуратора. Контур берётся из data/shapes.yaml.
+  Цвет кузова задаётся CSS-переменной --paint (оттенки градиента считает color-mix),
+  диски переключаются через <use href="#wheel-XX">.
+  Параметры: shape, color, title
+*/}}
+{{ $s := index hugo.Data.shapes .shape }}
+<svg class="car-config" viewBox="0 14 400 126" role="img" aria-label="{{ .title }}" style="--paint: {{ .color }}">
+  <defs>
+    <linearGradient id="cc-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color: color-mix(in srgb, var(--paint) 65%, white)"/>
+      <stop offset=".45" style="stop-color: var(--paint)"/>
+      <stop offset="1" style="stop-color: color-mix(in srgb, var(--paint) 55%, black)"/>
+    </linearGradient>
+    <linearGradient id="cc-glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c2433"/><stop offset="1" stop-color="#05070a"/>
+    </linearGradient>
+    <linearGradient id="cc-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e5e9f0"/><stop offset="1" stop-color="#6b7486"/>
+    </linearGradient>
+    <radialGradient id="cc-shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <radialGradient id="cc-glow"><stop offset="0" stop-color="#fff7d6"/><stop offset="1" stop-color="#fff7d6" stop-opacity="0"/></radialGradient>
+    <clipPath id="cc-clip"><path d="{{ $s.body }}"/></clipPath>
+
+    {{/* Диски в единичном радиусе (масштабируются через transform у <use>) */}}
+    <g id="wheel-19">
+      <circle r="1.18" fill="#05070a" opacity=".85"/><circle r="1" fill="#0d1016"/>
+      <circle r=".58" fill="url(#cc-rim)"/>
+      {{ range seq 0 4 }}<line x1="0" y1="0" x2="{{ mul (math.Cos (mul (div (mul 72. .) 180.) math.Pi)) .55 }}" y2="{{ mul (math.Sin (mul (div (mul 72. .) 180.) math.Pi)) .55 }}" stroke="#1a1f29" stroke-width=".14"/>{{ end }}
+      <circle r=".22" fill="#1a1f29"/>
+    </g>
+    <g id="wheel-20">
+      <circle r="1.18" fill="#05070a" opacity=".85"/><circle r="1" fill="#0d1016"/>
+      <circle r=".66" fill="url(#cc-rim)"/>
+      {{ range seq 0 9 }}<line x1="0" y1="0" x2="{{ mul (math.Cos (mul (div (mul 36. .) 180.) math.Pi)) .64 }}" y2="{{ mul (math.Sin (mul (div (mul 36. .) 180.) math.Pi)) .64 }}" stroke="#1a1f29" stroke-width=".07"/>{{ end }}
+      <circle r=".26" fill="#1a1f29"/>
+    </g>
+    <g id="wheel-21">
+      <circle r="1.18" fill="#05070a" opacity=".85"/><circle r="1" fill="#0d1016"/>
+      <circle r=".76" fill="url(#cc-rim)"/>
+      {{ range seq 0 6 }}<path d="M0 0L{{ mul (math.Cos (mul (div (mul 51.4 .) 180.) math.Pi)) .74 }} {{ mul (math.Sin (mul (div (mul 51.4 .) 180.) math.Pi)) .74 }}" stroke="#141821" stroke-width=".2" stroke-linecap="round"/>{{ end }}
+      <circle r=".3" fill="#141821"/>
+    </g>
+  </defs>
+
+  <ellipse cx="200" cy="127" rx="178" ry="9" fill="url(#cc-shadow)"/>
+  <path d="{{ $s.body }}" fill="url(#cc-body)"/>
+  <path d="{{ $s.glass }}" fill="url(#cc-glass)"/>
+  <g clip-path="url(#cc-clip)">
+    <path d="M0 89H400" stroke="#fff" stroke-opacity=".28" stroke-width="1.2" fill="none"/>
+    <path d="M0 104H400" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/>
+  </g>
+  <circle cx="{{ sub $s.right 5 }}" cy="89" r="9" fill="url(#cc-glow)"/>
+  <rect x="{{ sub $s.right 12 }}" y="86.5" width="10" height="4.5" rx="2" fill="#fffbe8"/>
+  <rect x="{{ add $s.left 2 }}" y="86.5" width="8" height="4.5" rx="2" fill="#ff3b3b"/>
+  <use class="wheel" href="#wheel-19" transform="translate(96 108) scale({{ $s.r }})"/>
+  <use class="wheel" href="#wheel-19" transform="translate(304 108) scale({{ $s.r }})"/>
+</svg>
