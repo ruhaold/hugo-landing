@@ -1,0 +1,31 @@
+{{ $cover := .Resources.GetMatch "cover.*" }}
+<article class="model-card" data-reveal
+  data-order="{{ .Weight }}"
+  data-name="{{ .Title }}"
+  data-price="{{ .Params.price }}"
+  data-range="{{ .Params.range }}"
+  data-accel="{{ .Params.accel }}"
+  data-power="{{ .Params.power }}"
+  data-body="{{ index .Params.bodyType 0 | anchorize }}"
+  data-drive="{{ .Params.drive }}">
+  <a class="model-card__link" href="{{ .RelPermalink }}">
+    <div class="model-card__visual">
+      {{ with $cover }}
+        {{ partial "picture.html" (dict "img" . "alt" $.Title "sizes" "(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" "widths" (slice 400 800)) }}
+      {{ else }}
+        {{ partial "car.html" (dict "title" .Title "color" .Params.color) }}
+      {{ end }}
+    </div>
+    <div class="model-card__body">
+      <span class="tag">{{ delimit .Params.bodyType ", " }}</span>
+      <h3>{{ .Title }}</h3>
+      <p class="muted">{{ .Params.tagline }}</p>
+      <dl class="specs">
+        <div><dt>{{ i18n "range" }}</dt><dd>{{ .Params.range }} {{ i18n "km" }}</dd></div>
+        <div><dt>{{ i18n "accel" }}</dt><dd>{{ .Params.accel }} {{ i18n "sec" }}</dd></div>
+        <div><dt>{{ i18n "power" }}</dt><dd>{{ .Params.power }} {{ i18n "hp" }}</dd></div>
+      </dl>
+      <p class="model-card__price">{{ i18n "from" }} {{ partial "price.html" .Params.price }}</p>
+    </div>
+  </a>
+</article>

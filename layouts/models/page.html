@@ -1,0 +1,49 @@
+{{ define "main" }}
+<section class="model-hero" style="--accent: {{ .Params.color }}">
+  <div class="container model-hero__inner">
+    <div>
+      {{ partial "breadcrumbs.html" . }}
+      <p class="eyebrow">{{ delimit .Params.bodyType ", " }}</p>
+      <h1>{{ .Title }}</h1>
+      <p class="hero__sub">{{ .Params.tagline }}</p>
+      <p class="model-card__price">{{ i18n "from" }} {{ partial "price.html" .Params.price }}</p>
+      <a class="btn" href="{{ site.Home.RelPermalink }}#test-drive">{{ i18n "bookTestDrive" }}</a>
+      <a class="btn btn--ghost" href="#configurator">{{ i18n "configureCta" }}</a>
+      <a class="btn btn--ghost" href="{{ (site.GetPage "/compare").RelPermalink }}?m={{ .File.ContentBaseName }}">{{ i18n "compareCta" }}</a>
+    </div>
+    {{ with .Resources.GetMatch "cover.*" }}
+      {{ partial "picture.html" (dict "img" . "alt" $.Title "sizes" "(min-width: 1024px) 55vw, 92vw" "eager" true "widths" (slice 600 1000 1400)) }}
+    {{ else }}
+      {{ partial "car.html" (dict "title" .Title "color" .Params.color) }}
+    {{ end }}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container prose-wrap">
+    <div class="prose">{{ .Content }}</div>
+    <aside>
+      <h2 class="h3">{{ i18n "specs" }}</h2>
+      <table class="spec-table">
+        <tbody>
+          <tr><th>{{ i18n "drive" }}</th><td>{{ i18n (printf "drive_%s" .Params.drive) }}</td></tr>
+          <tr><th>{{ i18n "range" }}</th><td>{{ .Params.range }} {{ i18n "km" }}</td></tr>
+          <tr><th>{{ i18n "accel" }}</th><td>{{ .Params.accel }} {{ i18n "sec" }}</td></tr>
+          <tr><th>{{ i18n "power" }}</th><td>{{ .Params.power }} {{ i18n "hp" }}</td></tr>
+          <tr><th>{{ i18n "battery" }}</th><td>{{ .Params.battery }} {{ i18n "kwh" }}</td></tr>
+        </tbody>
+      </table>
+    </aside>
+  </div>
+</section>
+
+{{ partial "configurator.html" . }}
+
+{{ partial "related-models.html" . }}
+{{ end }}
+
+{{ define "scripts" }}
+  {{ with resources.Get "js/configurator.js" | resources.Minify | resources.Fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+  {{ end }}
+{{ end }}

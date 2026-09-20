@@ -1,0 +1,12 @@
+{{/* Похожие модели: .Related использует индексы из [related] в hugo.toml (тип кузова весомее привода) */}}
+{{ $related := first 3 (where (site.RegularPages.Related .) "Section" "models") }}
+{{ with $related }}
+<section class="section" id="related">
+  <div class="container">
+    <h2>{{ i18n "related" }}</h2>
+    <div class="grid grid--3">
+      {{ range . }}{{ partial "model-card.html" . }}{{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

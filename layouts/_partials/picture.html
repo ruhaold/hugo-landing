@@ -1,0 +1,18 @@
+{{/*
+  Адаптивная картинка через Hugo Image Processing.
+  Параметры: img (ресурс), alt, sizes, widths (по умолчанию 400/800/1200), eager (bool), class
+*/}}
+{{ $img := .img }}
+{{ $widths := .widths | default (slice 400 800 1200) }}
+{{ $srcset := slice }}
+{{ range $widths }}
+  {{ $r := $img.Resize (printf "%dx webp q80" .) }}
+  {{ $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink .) }}
+{{ end }}
+{{ $fallback := $img.Resize "800x png" }}
+<picture>
+  <source type="image/webp" srcset="{{ delimit $srcset ", " }}" sizes="{{ .sizes | default "100vw" }}">
+  <img src="{{ $fallback.RelPermalink }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}"
+       alt="{{ .alt }}"{{ with .class }} class="{{ . }}"{{ end }}
+       {{ if .eager }}fetchpriority="high"{{ else }}loading="lazy" decoding="async"{{ end }}>
+</picture>
