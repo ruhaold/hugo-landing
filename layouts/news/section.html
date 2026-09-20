@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="page-head">
+  <div class="container">
+    {{ partial "breadcrumbs.html" . }}
+    <h1>{{ .Title }}</h1>
+    <p class="muted">{{ .Description }}</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container grid grid--2">
+    {{ range .Pages.ByDate.Reverse }}
+      {{ partial "news-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}

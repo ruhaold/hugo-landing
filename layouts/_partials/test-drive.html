@@ -1,0 +1,26 @@
+<section class="section" id="test-drive" data-pagefind-ignore>
+  <div class="container test-drive" data-reveal>
+    <div>
+      <h2>{{ i18n "testDriveTitle" }}</h2>
+      <p class="muted">{{ i18n "testDriveText" }}</p>
+    </div>
+    <form class="form" action="#" method="post">
+      <label>{{ i18n "name" }}
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+      <label>{{ i18n "phone" }}
+        <input type="tel" name="phone" autocomplete="tel" required>
+      </label>
+      <label>{{ i18n "model" }}
+        <select name="model">
+          {{ range where site.RegularPages "Section" "models" }}
+            <option>{{ .Title }}</option>
+          {{ end }}
+        </select>
+      </label>
+      <input type="hidden" name="config">
+      <p class="form__note" data-config-note hidden><strong>{{ i18n "configNote" }}:</strong> <span></span></p>
+      <button class="btn" type="submit">{{ i18n "submit" }}</button>
+    </form>
+  </div>
+</section>

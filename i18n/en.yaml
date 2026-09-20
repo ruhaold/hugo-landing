@@ -1,0 +1,107 @@
+skipToContent: Skip to content
+menu: Menu
+mainNav: Main navigation
+language: Language
+footerNote: A fictional brand. A Hugo learning project.
+keyFigures: Key figures
+modelRange: Model range
+technology: Technology
+news: News
+from: from
+currency: $
+range: Range
+accel: 0–100 km/h
+power: Power
+battery: Battery
+specs: Specifications
+km: km
+sec: s
+hp: hp
+kwh: kWh
+bookTestDrive: Book a test drive
+testDriveTitle: Book a test drive
+testDriveText: Leave your contact details and we will get back to you within one business day.
+name: Name
+phone: Phone
+model: Model
+submit: Send request
+allModels: All models
+theme: Theme
+themeToggle: Toggle theme
+drive: Drivetrain
+drive_awd: AWD
+drive_rwd: RWD
+bodyType: Body type
+maxPrice: Price up to
+sort: Sort by
+sortOrder: Recommended
+sortPriceAsc: "Price: low to high"
+sortPriceDesc: "Price: high to low"
+sortRange: Longest range
+sortAccel: Quickest acceleration
+sortPower: Most powerful
+reset: Reset filters
+found: "Models: {n}"
+empty: Nothing matches your search. Try changing the filters.
+pagination: Catalog pages
+prev: Previous
+next: Next
+page: Page
+priceFormat: "${n}"
+filters: Filters
+configurator: Build your VELORA
+configuratorText: Pick a colour, wheels and options, and the price and range update instantly.
+configureCta: Configure
+configColor: Body colour
+configWheels: Wheels
+configPackages: Options
+configSummary: Your configuration
+signature: Signature
+included: Included
+total: Total
+none: No options
+configNote: Selected configuration
+inch: '"'
+home: Home
+breadcrumbs: Breadcrumbs
+related: Similar models
+price: Price
+compare: Compare
+compareTitle: Compare models
+compareText: Pick two to three models, the best values are highlighted.
+comparePick: Models to compare
+compareMin: At least two models are required
+compareMax: You can compare up to three models
+compareBest: best value
+compareCta: Compare
+search: Search
+searchPlaceholder: Search the site
+searchClose: Close
+searchEmpty: Nothing found
+searchHint: Start typing to search
+searchFound: "Found: {n}"
+searchUnavailable: Search works in the built site (npm run preview).
+currencyCode: USD
+calcTitle: What does 100 km cost
+calcText: Compare electricity and petrol costs. Move the sliders to match your situation.
+calcModel: Electric car
+calcMileage: Yearly mileage
+calcTariff: Electricity tariff
+calcFuel: Petrol price
+calcConsumption: Petrol car consumption
+calcEv: Electric car
+calcIce: Petrol car
+calcPer100: per 100 km
+calcYear: per year
+calcFiveYears: over 5 years
+calcSavings: Difference over 5 years
+calcSaved: saved
+calcExtra: extra cost
+calcNote: The electric car's consumption is derived from the model's battery capacity and range.
+unitKmYear: km/year
+unitPerKwh: per kWh
+unitPerLiter: per litre
+unitLPer100: L/100 km
+unitKwhPer100: kWh/100 km
+notFoundTitle: Page not found
+notFoundText: The link may be outdated or the address mistyped.

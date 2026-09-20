@@ -1,0 +1,34 @@
+// Цвета темы — CSS custom properties. Тёмная тема по умолчанию,
+// светлая включается через prefers-color-scheme или вручную (data-theme на <html>).
+@mixin dark {
+  color-scheme: dark;
+  --c-bg: #0b0d12;
+  --c-bg-alt: #11141b;
+  --c-surface: #171b24;
+  --c-border: #262c39;
+  --c-text: #eef1f6;
+  --c-muted: #9aa3b5;
+  --c-accent: #5b9bff;
+  --c-accent-strong: #2f6fed;
+}
+
+@mixin light {
+  color-scheme: light;
+  --c-bg: #f6f7fa;
+  --c-bg-alt: #eceff4;
+  --c-surface: #ffffff;
+  --c-border: #dde2ea;
+  --c-text: #12151c;
+  --c-muted: #566072;
+  --c-accent: #2559d6;
+  --c-accent-strong: #2559d6;
+}
+
+:root { @include dark; }
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) { @include light; }
+}
+
+:root[data-theme='light'] { @include light; }
+:root[data-theme='dark'] { @include dark; }

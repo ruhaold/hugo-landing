@@ -1,0 +1,16 @@
+// Значения приходят из CSS custom properties (см. _themes.scss)
+$bg: var(--c-bg);
+$bg-alt: var(--c-bg-alt);
+$surface: var(--c-surface);
+$border: var(--c-border);
+$text: var(--c-text);
+$muted: var(--c-muted);
+$accent: var(--c-accent);
+$accent-strong: var(--c-accent-strong);
+
+$container: 1180px;
+$radius: 16px;
+$header-h: 68px;
+
+$bp-md: 768px;
+$bp-lg: 1024px;

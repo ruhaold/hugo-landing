@@ -1,0 +1,10 @@
+{{/* Упрощённый силуэт автомобиля; цвет задаётся через --accent */}}
+<svg class="car" viewBox="0 0 400 140" role="img" aria-label="{{ .title }}" style="--accent: {{ .color }}">
+  <ellipse cx="200" cy="128" rx="170" ry="8" fill="rgba(0,0,0,.35)"/>
+  <path class="car__body" d="M20 96c0-10 6-16 18-19l58-12c14-16 32-28 58-30h44c30 2 52 14 70 32l54 10c10 2 16 8 16 18v8c0 6-4 10-10 10H30c-6 0-10-4-10-10z"/>
+  <path class="car__glass" d="M112 68c10-12 24-22 44-24h40c20 2 38 12 52 26z"/>
+  <circle class="car__wheel" cx="96" cy="108" r="22"/>
+  <circle class="car__wheel" cx="304" cy="108" r="22"/>
+  <circle class="car__hub" cx="96" cy="108" r="9"/>
+  <circle class="car__hub" cx="304" cy="108" r="9"/>
+</svg>

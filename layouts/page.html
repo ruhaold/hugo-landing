@@ -1,0 +1,12 @@
+{{ define "main" }}
+<section class="page-head">
+  <div class="container">
+    {{ partial "breadcrumbs.html" . }}
+    {{ with .Date }}<time class="muted" datetime="{{ .Format "2006-01-02" }}">{{ . | time.Format ":date_long" }}</time>{{ end }}
+    <h1>{{ .Title }}</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container prose"><div>{{ .Content }}</div></div>
+</section>
+{{ end }}

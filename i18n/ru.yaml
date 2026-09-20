@@ -1,0 +1,107 @@
+skipToContent: Перейти к содержимому
+menu: Меню
+mainNav: Основная навигация
+language: Язык
+footerNote: Вымышленный бренд. Учебный проект на Hugo.
+keyFigures: Ключевые показатели
+modelRange: Модельный ряд
+technology: Технологии
+news: Новости
+from: от
+currency: ₽
+range: Запас хода
+accel: 0–100 км/ч
+power: Мощность
+battery: Батарея
+specs: Характеристики
+km: км
+sec: с
+hp: л.с.
+kwh: кВт·ч
+bookTestDrive: Записаться на тест-драйв
+testDriveTitle: Запишитесь на тест-драйв
+testDriveText: Оставьте контакты, и мы свяжемся с вами в течение рабочего дня.
+name: Имя
+phone: Телефон
+model: Модель
+submit: Отправить заявку
+allModels: Все модели
+theme: Тема
+themeToggle: Переключить тему
+drive: Привод
+drive_awd: Полный
+drive_rwd: Задний
+bodyType: Тип кузова
+maxPrice: Цена до
+sort: Сортировка
+sortOrder: Рекомендуемые
+sortPriceAsc: Сначала дешевле
+sortPriceDesc: Сначала дороже
+sortRange: Больше запас хода
+sortAccel: Быстрее разгон
+sortPower: Мощнее
+reset: Сбросить фильтры
+found: "Моделей: {n}"
+empty: По вашему запросу ничего не найдено. Попробуйте изменить фильтры.
+pagination: Страницы каталога
+prev: Назад
+next: Вперёд
+page: Страница
+priceFormat: "{n} ₽"
+filters: Фильтры
+configurator: Соберите свой VELORA
+configuratorText: Выберите цвет, диски и опции, цена и запас хода пересчитаются сразу.
+configureCta: Собрать комплектацию
+configColor: Цвет кузова
+configWheels: Диски
+configPackages: Опции
+configSummary: Ваша комплектация
+signature: Фирменный
+included: Включено
+total: Итого
+none: Без опций
+configNote: Выбранная комплектация
+inch: '"'
+home: Главная
+breadcrumbs: Навигационная цепочка
+related: Похожие модели
+price: Цена
+compare: Сравнение
+compareTitle: Сравнение моделей
+compareText: Выберите от двух до трёх моделей, лучшие значения подсвечены.
+comparePick: Модели для сравнения
+compareMin: Нужно минимум две модели
+compareMax: Можно сравнить не больше трёх
+compareBest: лучшее значение
+compareCta: Сравнить
+search: Поиск
+searchPlaceholder: Поиск по сайту
+searchClose: Закрыть
+searchEmpty: Ничего не найдено
+searchHint: Начните вводить запрос
+searchFound: "Найдено: {n}"
+searchUnavailable: Поиск работает в собранной версии сайта (npm run preview).
+currencyCode: RUB
+calcTitle: Сколько стоит 100 км
+calcText: Сравните расходы на электричество и бензин. Подвигайте ползунки под свои условия.
+calcModel: Электромобиль
+calcMileage: Пробег в год
+calcTariff: Тариф на электричество
+calcFuel: Цена бензина
+calcConsumption: Расход бензинового авто
+calcEv: Электромобиль
+calcIce: Бензиновый автомобиль
+calcPer100: на 100 км
+calcYear: в год
+calcFiveYears: за 5 лет
+calcSavings: Разница за 5 лет
+calcSaved: экономия
+calcExtra: переплата
+calcNote: Расход электромобиля считается по ёмкости батареи и запасу хода модели.
+unitKmYear: км/год
+unitPerKwh: за кВт·ч
+unitPerLiter: за литр
+unitLPer100: л/100 км
+unitKwhPer100: кВт·ч/100 км
+notFoundTitle: Страница не найдена
+notFoundText: Возможно, ссылка устарела или адрес введён с ошибкой.

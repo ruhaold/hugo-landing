@@ -1,0 +1,13 @@
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div>
+      <a class="logo" href="{{ site.Home.RelPermalink }}">VELORA</a>
+      <p class="muted">{{ i18n "footerNote" }}</p>
+    </div>
+    <ul class="site-footer__contacts">
+      <li><a href="tel:{{ site.Params.phone | replaceRE `[^\d+]` "" }}">{{ site.Params.phone }}</a></li>
+      <li><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></li>
+    </ul>
+    <p class="muted">© {{ now.Year }} VELORA</p>
+  </div>
+</footer>

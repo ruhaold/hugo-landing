@@ -1,0 +1,2 @@
+{{- $n := lang.FormatNumber 0 . -}}
+{{- if eq site.Language.Lang "ru" }}{{ replace $n "," " " }} {{ i18n "currency" }}{{ else }}{{ i18n "currency" }}{{ $n }}{{ end -}}

@@ -1,0 +1,80 @@
+{{ define "main" }}
+{{ with .Params.hero }}
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <p class="eyebrow">{{ .eyebrow }}</p>
+      <h1>{{ .title }}</h1>
+      <p class="hero__sub">{{ .subtitle }}</p>
+      <a class="btn" href="{{ if hasPrefix .ctaLink "#" }}{{ .ctaLink }}{{ else }}{{ with site.GetPage .ctaLink }}{{ .RelPermalink }}{{ end }}{{ end }}">{{ .cta }}</a>
+    </div>
+    {{ with site.GetPage (printf "/models/%s" .model) }}
+      {{ with .Resources.GetMatch "cover.*" }}
+        <div class="hero__visual" data-parallax>
+          {{ partial "picture.html" (dict "img" . "alt" $.Title "sizes" "(min-width: 1024px) 55vw, 100vw" "eager" true "widths" (slice 600 1000 1600)) }}
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
+<section class="stats" aria-label="{{ i18n "keyFigures" }}">
+  <div class="container stats__grid">
+    {{ range (index hugo.Data.stats site.Language.Lang) }}
+      <div class="stat" data-reveal>
+        <strong><span data-count="{{ .value }}">{{ .value }}</span><small>{{ .unit }}</small></strong>
+        <span>{{ .label }}</span>
+      </div>
+    {{ end }}
+  </div>
+</section>
+
+<section class="section" id="models">
+  <div class="container">
+    <h2>{{ i18n "modelRange" }}</h2>
+    <div class="grid grid--3">
+      {{ range first 3 (where site.RegularPages "Section" "models").ByWeight }}
+        {{ partial "model-card.html" . }}
+      {{ end }}
+    </div>
+    <p class="section__more"><a class="btn btn--ghost" href="{{ (site.GetPage "/models").RelPermalink }}">{{ i18n "allModels" }}</a></p>
+  </div>
+</section>
+
+<section class="section section--alt" id="tech">
+  <div class="container">
+    <h2>{{ i18n "technology" }}</h2>
+    <div class="grid grid--4">
+      {{ range (index hugo.Data.tech site.Language.Lang) }}
+        <div class="feature" data-reveal>
+          <span class="feature__icon" aria-hidden="true">{{ .icon }}</span>
+          <h3>{{ .title }}</h3>
+          <p class="muted">{{ .text }}</p>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "calculator.html" . }}
+
+<section class="section" id="news">
+  <div class="container">
+    <h2>{{ i18n "news" }}</h2>
+    <div class="grid grid--2">
+      {{ range first 2 (where site.RegularPages "Section" "news") }}
+        {{ partial "news-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ partial "test-drive.html" . }}
+{{ end }}
+
+{{ define "scripts" }}
+  {{ with resources.Get "js/calculator.js" | resources.Minify | resources.Fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+  {{ end }}
+{{ end }}

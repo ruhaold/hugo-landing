@@ -1,0 +1,25 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.test-drive {
+  display: grid; gap: 40px; align-items: start;
+  padding: 32px; border-radius: 24px; border: 1px solid $border;
+  background: linear-gradient(135deg, $surface, $bg-alt);
+  @include up($bp-lg) { grid-template-columns: 1fr 1fr; padding: 56px; }
+}
+
+.form {
+  display: grid; gap: 16px;
+  label { display: grid; gap: 6px; font-size: .9rem; color: $muted; }
+  input, select {
+    font: inherit; color: $text; background: $bg; border: 1px solid $border;
+    border-radius: 12px; padding: 12px 14px;
+    &:focus { outline: 2px solid $accent; border-color: transparent; }
+  }
+}
+
+.site-footer {
+  border-top: 1px solid $border; padding: 40px 0; background: $bg-alt;
+  &__inner { display: grid; gap: 20px; @include up($bp-md) { grid-template-columns: 1fr auto auto; align-items: center; } }
+  &__contacts { list-style: none; margin: 0; padding: 0; a { text-decoration: none; color: $muted; &:hover { color: $text; } } }
+}

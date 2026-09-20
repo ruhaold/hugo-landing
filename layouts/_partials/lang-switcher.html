@@ -1,0 +1,14 @@
+{{/* Ссылка на перевод текущей страницы; если перевода нет, ведём на главную нужного языка */}}
+{{ $page := . }}
+<ul class="lang-switcher" aria-label="{{ i18n "language" }}">
+  {{ range hugo.Sites }}
+    {{ $lang := .Language }}
+    {{ $href := .Home.RelPermalink }}
+    {{ range $page.AllTranslations }}
+      {{ if eq .Language.Lang $lang.Lang }}{{ $href = .RelPermalink }}{{ end }}
+    {{ end }}
+    <li>
+      <a href="{{ $href }}" hreflang="{{ $lang.Lang }}" lang="{{ $lang.Lang }}"{{ if eq $lang.Lang $page.Language.Lang }} aria-current="true"{{ end }}>{{ $lang.Label }}</a>
+    </li>
+  {{ end }}
+</ul>

@@ -1,0 +1,72 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.site-header {
+  position: sticky; top: 0; z-index: 50; height: $header-h;
+  background: alpha($bg, .85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border;
+
+  &__inner { height: 100%; display: flex; align-items: center; gap: 16px; }
+}
+
+.logo { font-weight: 800; letter-spacing: .3em; text-decoration: none; }
+
+.nav {
+  position: absolute; top: $header-h; left: 0; right: 0;
+  background: $bg; border-bottom: 1px solid $border;
+  display: none;
+  &.is-open { display: block; }
+
+  ul { list-style: none; margin: 0; padding: 12px 16px; display: grid; gap: 4px; }
+  a { display: block; padding: 10px 0; text-decoration: none; color: $muted;
+    &:hover, &[aria-current] { color: $text; } }
+
+  @include up($bp-lg) {
+    order: 1;
+    position: static; display: block; background: none; border: 0;
+    ul { display: flex; gap: 32px; padding: 0; }
+    a { padding: 0; }
+  }
+}
+
+.nav-toggle {
+  order: 5;
+  display: grid; gap: 6px; background: none; border: 0; padding: 8px; cursor: pointer;
+  span { width: 24px; height: 2px; background: $text; }
+  @include up($bp-lg) { display: none; }
+}
+
+.site-header .logo { margin-right: auto; }
+
+.lang-switcher {
+  list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; 
+  @include up($bp-lg) { order: 2; margin-left: 8px; }
+
+  a {
+    display: block; padding: 4px 10px; border-radius: 999px; font-size: .8rem; font-weight: 600;
+    text-decoration: none; color: $muted; border: 1px solid transparent;
+    &:hover { color: $text; }
+    &[aria-current] { color: $text; border-color: $border; background: $surface; }
+  }
+}
+
+.theme-toggle {
+  order: 4; display: grid; place-items: center; width: 38px; height: 38px; cursor: pointer;
+  color: $text; background: transparent; border: 1px solid $border; border-radius: 50%;
+  &:hover { border-color: $accent; }
+
+  .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .icon--moon { display: none; }
+}
+
+// В тёмной теме показываем солнце (кликнуть — станет светло), в светлой — луну
+:root[data-theme='light'] .theme-toggle {
+  .icon--sun { display: none; }
+  .icon--moon { display: block; }
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .theme-toggle {
+    .icon--sun { display: none; }
+    .icon--moon { display: block; }
+  }
+}

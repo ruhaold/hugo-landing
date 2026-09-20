@@ -1,0 +1,10 @@
+@use 'variables' as *;
+
+@mixin up($bp) {
+  @media (min-width: $bp) { @content; }
+}
+
+// Прозрачность для цвета из CSS-переменной (rgba() с var() не работает)
+@function alpha($color, $amount) {
+  @return color-mix(in srgb, #{$color} #{$amount * 100%}, transparent);
+}

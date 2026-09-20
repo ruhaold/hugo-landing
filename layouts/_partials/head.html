@@ -1,0 +1,23 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+{{/* Применяем сохранённую тему до первой отрисовки, чтобы не было мигания */}}
+<script>{{ (resources.Get "js/theme-init.js" | resources.Minify).Content | safeJS }}</script>
+{{ $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:locale" content="{{ site.Language.Locale }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{ partial "schema.html" . }}
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{ end }}
+{{ $opts := dict "transpiler" "dartsass" "targetPath" "css/main.css" }}
+{{ if hugo.IsProduction }}
+  {{ $opts = merge $opts (dict "outputStyle" "compressed") }}
+{{ end }}
+{{ with resources.Get "scss/main.scss" | css.Sass $opts | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{ end }}
