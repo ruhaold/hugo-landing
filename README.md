@@ -85,6 +85,17 @@ Hugo сам сделает WebP нужных размеров.
 2. `i18n/xx.yaml`, `data/tech/xx.yaml`, `data/stats/xx.yaml`
 3. Файлы `*.xx.md` рядом с русскими в `content/`
 
+## Качество
+
+Lighthouse 12.8 на живом сайте, мобильный профиль (главная, каталог, страница модели, сравнение, новости, английская версия):
+
+| Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|
+| 98–100 | 100 | 100 | 100 |
+
+LCP 0,8–1,2 с, TBT 0 мс, CLS ≤ 0,05. Единственное замечание, которое Lighthouse оставляет, — срок кэширования 10 минут:
+его задаёт сам GitHub Pages, на бесплатном хостинге он не настраивается.
+
 ## Деплой
 
 Сайт публикуется на GitHub Pages через GitHub Actions ([deploy.yml](.github/workflows/deploy.yml)) при каждом push в `main`:
