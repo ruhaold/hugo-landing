@@ -1,0 +1,91 @@
+{{ define "main" }}
+{{ $pages := .Pages.ByWeight }}
+{{ $types := slice }}
+{{ $drives := slice }}
+{{ range $pages }}
+  {{ range .Params.bodyType }}{{ $types = $types | append . }}{{ end }}
+  {{ with .Params.drive }}{{ $drives = $drives | append . }}{{ end }}
+{{ end }}
+
+<section class="page-head">
+  <div class="container">
+    {{ partial "breadcrumbs.html" . }}
+    <h1>{{ .Title }}</h1>
+    <p class="muted">{{ .Description }}</p>
+  </div>
+</section>
+
+<section class="section" data-catalog
+  data-page-size="{{ site.Params.catalogPageSize | default 6 }}"
+  data-price-format="{{ i18n "priceFormat" }}"
+  data-found="{{ i18n "found" }}"
+  data-page-label="{{ i18n "page" }}"
+  data-prev="{{ i18n "prev" }}"
+  data-next="{{ i18n "next" }}">
+  <div class="container">
+
+    {{/* Панель фильтров скрыта до инициализации JS: без JS каталог просто показывает все модели */}}
+    <button type="button" class="btn btn--ghost btn--sm filters-toggle" data-filters-toggle
+      aria-expanded="false" aria-controls="filters" hidden>
+      {{ i18n "filters" }} <span class="filters-toggle__badge" data-filters-badge hidden></span>
+    </button>
+
+    <form class="filters is-collapsed" data-pagefind-ignore id="filters" data-filters hidden>
+      <fieldset class="filters__group">
+        <legend>{{ i18n "bodyType" }}</legend>
+        <div class="chips">
+          {{ range $types | uniq }}
+            <label class="chip"><input type="checkbox" name="body" value="{{ . | anchorize }}"><span>{{ . }}</span></label>
+          {{ end }}
+        </div>
+      </fieldset>
+
+      <fieldset class="filters__group">
+        <legend>{{ i18n "drive" }}</legend>
+        <div class="chips">
+          {{ range $drives | uniq }}
+            <label class="chip"><input type="checkbox" name="drive" value="{{ . }}"><span>{{ i18n (printf "drive_%s" .) }}</span></label>
+          {{ end }}
+        </div>
+      </fieldset>
+
+      <div class="filters__group">
+        <label class="field" for="f-price">{{ i18n "maxPrice" }}: <output data-price-out></output></label>
+        <input id="f-price" class="range" type="range" name="price" data-price>
+      </div>
+
+      <div class="filters__group">
+        <label class="field" for="f-sort">{{ i18n "sort" }}</label>
+        <select id="f-sort" class="select" name="sort" data-sort>
+          <option value="order">{{ i18n "sortOrder" }}</option>
+          <option value="price-asc">{{ i18n "sortPriceAsc" }}</option>
+          <option value="price-desc">{{ i18n "sortPriceDesc" }}</option>
+          <option value="range-desc">{{ i18n "sortRange" }}</option>
+          <option value="accel-asc">{{ i18n "sortAccel" }}</option>
+          <option value="power-desc">{{ i18n "sortPower" }}</option>
+        </select>
+      </div>
+
+      <button type="reset" class="btn btn--ghost btn--sm" data-reset>{{ i18n "reset" }}</button>
+    </form>
+
+    <p class="catalog__count muted" data-count aria-live="polite"></p>
+
+    <div class="grid grid--3" data-grid>
+      {{ range $pages }}
+        {{ partial "model-card.html" . }}
+      {{ end }}
+    </div>
+
+    <p class="catalog__empty" data-empty hidden>{{ i18n "empty" }}</p>
+
+    <nav class="pagination" data-pagination aria-label="{{ i18n "pagination" }}" hidden></nav>
+  </div>
+</section>
+{{ end }}
+
+{{ define "scripts" }}
+  {{ with resources.Get "js/catalog.js" | resources.Minify | resources.Fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+  {{ end }}
+{{ end }}

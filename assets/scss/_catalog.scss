@@ -1,0 +1,65 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.filters {
+  display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: flex-end;
+  padding: 20px; margin-bottom: 24px;
+  background: $surface; border: 1px solid $border; border-radius: $radius;
+
+  &__group { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 8px; align-content: start;
+    &:has(.range) { flex: 1 1 220px; }
+    &:has(.select) { flex: 1 1 100%; @include up($bp-md) { flex: 0 1 220px; } }
+  }
+  legend, .field { font-size: .8rem; color: $muted; padding: 0; }
+}
+
+.filters-toggle {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  @include up($bp-md) { display: none !important; }
+
+  &__badge {
+    display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px;
+    border-radius: 999px; background: $accent-strong; color: #fff; font-size: .75rem;
+  }
+}
+.filters.is-collapsed { display: none; @include up($bp-md) { display: flex; } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chip {
+  position: relative; cursor: pointer;
+  input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  span {
+    display: block; padding: 6px 14px; border-radius: 999px; font-size: .88rem;
+    border: 1px solid $border; color: $muted; background: $bg;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  &:hover span { color: $text; }
+  input:checked + span { background: $accent-strong; border-color: $accent-strong; color: #fff; }
+  input:focus-visible + span { outline: 2px solid $accent; outline-offset: 2px; }
+}
+
+.range { width: 100%; accent-color: $accent-strong; }
+.select {
+  font: inherit; color: $text; background: $bg; border: 1px solid $border;
+  border-radius: 12px; padding: 8px 12px; width: 100%;
+}
+output { color: $text; font-weight: 600; white-space: nowrap; }
+
+.catalog__count { margin: 0 0 16px; }
+.catalog__empty { padding: 48px 0; text-align: center; color: $muted; }
+
+.pagination {
+  margin-top: 40px;
+  ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+  button {
+    min-width: 42px; height: 42px; padding: 0 12px; cursor: pointer; font: inherit;
+    color: $text; background: $surface; border: 1px solid $border; border-radius: 12px;
+    &:hover:not(:disabled) { border-color: $accent; }
+    &:disabled { opacity: .4; cursor: not-allowed; }
+    &[aria-current] { background: $accent-strong; border-color: $accent-strong; color: #fff; }
+  }
+}
+
+.model-card { scroll-margin-top: calc(#{$header-h} + 16px); }
+.grid { scroll-margin-top: calc(#{$header-h} + 16px); }
