@@ -1,6 +1,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7fa" media="(prefers-color-scheme: light)">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 {{/* Применяем сохранённую тему до первой отрисовки, чтобы не было мигания */}}
 <script>{{ (resources.Get "js/theme-init.js" | resources.Minify).Content | safeJS }}</script>
 {{ $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}

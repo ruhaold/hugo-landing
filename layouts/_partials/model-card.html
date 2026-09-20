@@ -1,31 +1,34 @@
-{{ $cover := .Resources.GetMatch "cover.*" }}
+{{/* Аргумент: страница модели или dict "page" + "eager" (картинка без lazy-load для первых карточек в экране) */}}
+{{ $p := . }}{{ $eager := false }}
+{{ if reflect.IsMap . }}{{ $p = .page }}{{ $eager = .eager }}{{ end }}
+{{ $cover := $p.Resources.GetMatch "cover.*" }}
 <article class="model-card" data-reveal
-  data-order="{{ .Weight }}"
-  data-name="{{ .Title }}"
-  data-price="{{ .Params.price }}"
-  data-range="{{ .Params.range }}"
-  data-accel="{{ .Params.accel }}"
-  data-power="{{ .Params.power }}"
-  data-body="{{ index .Params.bodyType 0 | anchorize }}"
-  data-drive="{{ .Params.drive }}">
-  <a class="model-card__link" href="{{ .RelPermalink }}">
+  data-order="{{ $p.Weight }}"
+  data-name="{{ $p.Title }}"
+  data-price="{{ $p.Params.price }}"
+  data-range="{{ $p.Params.range }}"
+  data-accel="{{ $p.Params.accel }}"
+  data-power="{{ $p.Params.power }}"
+  data-body="{{ index $p.Params.bodyType 0 | anchorize }}"
+  data-drive="{{ $p.Params.drive }}">
+  <a class="model-card__link" href="{{ $p.RelPermalink }}">
     <div class="model-card__visual">
       {{ with $cover }}
-        {{ partial "picture.html" (dict "img" . "alt" $.Title "sizes" "(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" "widths" (slice 400 800)) }}
+        {{ partial "picture.html" (dict "img" . "eager" $eager "alt" $p.Title "sizes" "(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw" "widths" (slice 400 800)) }}
       {{ else }}
-        {{ partial "car.html" (dict "title" .Title "color" .Params.color) }}
+        {{ partial "car.html" (dict "title" $p.Title "color" $p.Params.color) }}
       {{ end }}
     </div>
     <div class="model-card__body">
-      <span class="tag">{{ delimit .Params.bodyType ", " }}</span>
-      <h3>{{ .Title }}</h3>
-      <p class="muted">{{ .Params.tagline }}</p>
+      <span class="tag">{{ delimit $p.Params.bodyType ", " }}</span>
+      <h3>{{ $p.Title }}</h3>
+      <p class="muted">{{ $p.Params.tagline }}</p>
       <dl class="specs">
-        <div><dt>{{ i18n "range" }}</dt><dd>{{ .Params.range }} {{ i18n "km" }}</dd></div>
-        <div><dt>{{ i18n "accel" }}</dt><dd>{{ .Params.accel }} {{ i18n "sec" }}</dd></div>
-        <div><dt>{{ i18n "power" }}</dt><dd>{{ .Params.power }} {{ i18n "hp" }}</dd></div>
+        <div><dt>{{ i18n "range" }}</dt><dd>{{ $p.Params.range }} {{ i18n "km" }}</dd></div>
+        <div><dt>{{ i18n "accel" }}</dt><dd>{{ $p.Params.accel }} {{ i18n "sec" }}</dd></div>
+        <div><dt>{{ i18n "power" }}</dt><dd>{{ $p.Params.power }} {{ i18n "hp" }}</dd></div>
       </dl>
-      <p class="model-card__price">{{ i18n "from" }} {{ partial "price.html" .Params.price }}</p>
+      <p class="model-card__price">{{ i18n "from" }} {{ partial "price.html" $p.Params.price }}</p>
     </div>
   </a>
 </article>

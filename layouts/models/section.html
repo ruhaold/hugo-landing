@@ -71,9 +71,10 @@
 
     <p class="catalog__count muted" data-count aria-live="polite"></p>
 
+    <h2 class="sr-only">{{ i18n "modelRange" }}</h2>
     <div class="grid grid--3" data-grid>
-      {{ range $pages }}
-        {{ partial "model-card.html" . }}
+      {{ range $i, $p := $pages }}
+        {{ partial "model-card.html" (dict "page" $p "eager" (lt $i 3)) }}
       {{ end }}
     </div>
 

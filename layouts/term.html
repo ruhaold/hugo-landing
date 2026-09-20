@@ -1,6 +1,7 @@
 {{ define "main" }}
 <section class="page-head"><div class="container"><h1>{{ .Title }}</h1></div></section>
-<section class="section"><div class="container grid grid--3">
-  {{ range .Pages }}{{ partial "model-card.html" . }}{{ end }}
+<section class="section"><div class="container">
+  <h2 class="sr-only">{{ i18n "modelRange" }}</h2>
+  <div class="grid grid--3">{{ range .Pages }}{{ partial "model-card.html" . }}{{ end }}</div>
 </div></section>
 {{ end }}
