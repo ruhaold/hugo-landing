@@ -1,0 +1,17 @@
+{
+  "name": "velora-hugo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "scripts/hugo.sh server -D --baseURL http://localhost:1313/",
+    "build:site": "scripts/hugo.sh --gc --minify -e production",
+    "build": "npm run build:site && pagefind --site public",
+    "preview": "npm run build:site && pagefind --site public --serve"
+  },
+  "description": "Учебный проект: сайт вымышленного автобренда на Hugo",
+  "devDependencies": {
+    "pagefind": "^1.5.2",
+    "sass-embedded": "^1.104.1",
+    "sharp": "^0.35.4"
+  },
+  "private": true
+}
