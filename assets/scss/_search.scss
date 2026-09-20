@@ -1,0 +1,35 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.search-toggle {
+  order: 3; display: grid; place-items: center; width: 38px; height: 38px; cursor: pointer;
+  color: $text; background: transparent; border: 1px solid $border; border-radius: 50%;
+  &:hover { border-color: $accent; }
+  .icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+}
+
+.search {
+  width: min(680px, calc(100% - 32px)); max-height: min(80vh, 640px); padding: 0; margin: 12vh auto auto;
+  color: $text; background: $surface; border: 1px solid $border; border-radius: $radius;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .45);
+  &[open] { display: flex; flex-direction: column; }
+  &::backdrop { background: rgba(5, 7, 10, .6); backdrop-filter: blur(4px); }
+
+  &__form { display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid $border; }
+  &__input {
+    flex: 1; min-width: 0; font: inherit; font-size: 1.1rem; color: $text; background: transparent; border: 0;
+    &:focus { outline: none; }
+  }
+  &__close {
+    font: inherit; font-size: .75rem; color: $muted; background: $bg; border: 1px solid $border;
+    border-radius: 8px; padding: 4px 10px; cursor: pointer;
+  }
+  &__status { margin: 0; padding: 12px 20px; font-size: .85rem; }
+  &__results {
+    list-style: none; margin: 0; padding: 0 8px 8px; overflow-y: auto;
+    a { display: grid; gap: 4px; padding: 12px; border-radius: 12px; text-decoration: none;
+      &:hover, &:focus-visible { background: $bg; } }
+    span { font-size: .9rem; }
+    mark { background: alpha($accent-strong, .3); color: $text; border-radius: 3px; padding: 0 2px; }
+  }
+}

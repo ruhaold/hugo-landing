@@ -1,0 +1,43 @@
+{{/* Структурированные данные JSON-LD: организация и сайт на главной, автомобиль на страницах моделей, хлебные крошки везде */}}
+{{ $graph := slice }}
+{{ $org := dict "@type" "Organization" "@id" (printf "%s#org" site.Home.Permalink) "name" "VELORA" "url" site.Home.Permalink "email" site.Params.email "telephone" site.Params.phone }}
+
+{{ if .IsHome }}
+  {{ $graph = $graph | append $org }}
+  {{ $graph = $graph | append (dict "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "inLanguage" site.Language.Lang "publisher" (dict "@id" (index $org "@id"))) }}
+{{ end }}
+
+{{ if and .IsPage (eq .Section "models") }}
+  {{ $offer := dict "@type" "Offer" "price" .Params.price "priceCurrency" (i18n "currencyCode") "availability" "https://schema.org/InStock" "url" .Permalink }}
+  {{ $props := slice
+    (dict "@type" "PropertyValue" "name" (i18n "range") "value" .Params.range "unitText" "km")
+    (dict "@type" "PropertyValue" "name" (i18n "accel") "value" .Params.accel "unitText" "s")
+    (dict "@type" "PropertyValue" "name" (i18n "battery") "value" .Params.battery "unitText" "kWh") }}
+  {{ $car := dict
+    "@type" (slice "Product" "Car")
+    "name" .Title
+    "description" (.Description | default .Params.tagline)
+    "url" .Permalink
+    "brand" (dict "@type" "Brand" "name" "VELORA")
+    "bodyType" (index .Params.bodyType 0)
+    "fuelType" "Electricity"
+    "vehicleEngine" (dict "@type" "EngineSpecification" "enginePower" (dict "@type" "QuantitativeValue" "value" .Params.power "unitCode" "BHP"))
+    "additionalProperty" $props
+    "offers" $offer }}
+  {{ with .Resources.GetMatch "cover.*" }}
+    {{ $car = merge $car (dict "image" (.Resize "1200x webp q80").Permalink) }}
+  {{ end }}
+  {{ $graph = $graph | append $car }}
+{{ end }}
+
+{{ if not .IsHome }}
+  {{ $items := slice }}
+  {{ range $i, $c := partial "func/crumbs.html" . }}
+    {{ $items = $items | append (dict "@type" "ListItem" "position" (add $i 1) "name" $c.name "item" $c.url) }}
+  {{ end }}
+  {{ $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) }}
+{{ end }}
+
+{{ with $graph }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" . | jsonify | safeJS }}</script>
+{{ end }}

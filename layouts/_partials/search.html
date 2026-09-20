@@ -1,0 +1,16 @@
+{{/* Поиск на Pagefind: индекс строится после сборки Hugo (npm run build), библиотека подгружается лениво при первом открытии */}}
+<dialog class="search" data-search
+  data-pagefind="{{ "pagefind/pagefind.js" | relURL }}"
+  data-empty="{{ i18n "searchEmpty" }}"
+  data-hint="{{ i18n "searchHint" }}"
+  data-found="{{ i18n "searchFound" }}"
+  data-unavailable="{{ i18n "searchUnavailable" }}"
+  aria-label="{{ i18n "search" }}">
+  <form class="search__form" method="dialog" role="search">
+    <input class="search__input" type="search" name="q" autocomplete="off" spellcheck="false"
+      placeholder="{{ i18n "searchPlaceholder" }}" aria-label="{{ i18n "search" }}" data-search-input>
+    <button class="search__close" type="submit" aria-label="{{ i18n "searchClose" }}">Esc</button>
+  </form>
+  <p class="search__status muted" data-search-status aria-live="polite">{{ i18n "searchHint" }}</p>
+  <ul class="search__results" data-search-results></ul>
+</dialog>

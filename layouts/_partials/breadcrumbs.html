@@ -1,0 +1,14 @@
+{{ if not .IsHome }}
+  {{ $crumbs := partial "func/crumbs.html" . }}
+  <nav class="breadcrumbs" aria-label="{{ i18n "breadcrumbs" }}">
+    <ol>
+      {{ range $i, $c := $crumbs }}
+        {{ if eq (add $i 1) (len $crumbs) }}
+          <li aria-current="page">{{ $c.name }}</li>
+        {{ else }}
+          <li><a href="{{ $c.url }}">{{ $c.name }}</a></li>
+        {{ end }}
+      {{ end }}
+    </ol>
+  </nav>
+{{ end }}

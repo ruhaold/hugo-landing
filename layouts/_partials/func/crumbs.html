@@ -1,0 +1,8 @@
+{{/* Возвращает цепочку [{name, url}] от главной до текущей страницы: для HTML-крошек и JSON-LD */}}
+{{ $list := slice }}
+{{ range .Ancestors.Reverse }}
+  {{ $name := cond .IsHome (i18n "home") .Title }}
+  {{ $list = $list | append (dict "name" $name "url" .Permalink) }}
+{{ end }}
+{{ $list = $list | append (dict "name" .Title "url" .Permalink) }}
+{{ return $list }}
